@@ -9,10 +9,18 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Problem:
+## Exeutive Summary
+
+Motor Trend provides information, opinions, and tips about cars to its readers. A topic of interest is energy efficiency of vehicles, specifically autmatic and manual transimission and miles per gallon. The analysis will provide insight into the methods used and the results for answering the question is miles per gallon for automatic vehicles greater than, less than, or equal to vehicles with manual transmission.
+
+
+
+## Exploratory Analysis
+
 
 
 ```{r cars}
+data(cars)
 summary(mtcars)
 ```
 
