@@ -9,11 +9,19 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Problem:
+## Executive Summary:
+Motor Trend contains a vast amount of data relating to the vehicles specifications. The research will
+attempt to answer two questions relating to our question: MPG is better
+
+“Is an automatic or manual transmission better for MPG”
+"Quantify the MPG difference between automatic and manual transmissions"
+
 
 
 ```{r cars}
 summary(mtcars)
+names(mtcars)
+hist
 ```
 
 ## Including Plots
