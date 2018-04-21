@@ -24,12 +24,23 @@ names(mtcars)
 hist
 ```
 
-## Including Plots
+## Exploratory Analysis
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+We will look at the distribution of the variables. 
+
+```{r distribution, echo=FALSE}
+mns = NULL
+for (i in 1 : 1000) mns = c(mns, mean(runif(40)))5r
+par(mfrow=c(2,2), mai = c(0.80, 0.80, 0.2, 0.1))
+hist(mns, col = "dodger blue",breaks = 20, xlab = "simulated results")
+rd <- runif(1000)
+hist(rd,col = "green",breaks = 20, xlab = "uniform results")
+
+abc <- function(x) dnorm(x, log = FALSE)
+plot(abc, -max(mns), max(mns)
+     #,main = "log { Normal density }"
+     , xlab = "theoretical distribution")
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
