@@ -28,8 +28,9 @@ summary(mtcars)
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r pressure, echo=TRUE}
+cargrp <- aggregate(mtcars, by = list("am"), FUN = mean, na.rm = TRUE)
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
