@@ -12,7 +12,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Exeutive Summary
 
 Motor Trend provides information, opinions, and tips about cars to its readers. A topic of interest is energy efficiency of vehicles, specifically autmatic and manual transimission and miles per gallon. The analysis will provide insight into the methods used and the results for answering the question is miles per gallon for automatic vehicles greater than, less than, or equal to vehicles with manual transmission.
-
+      * “Is an automatic or manual transmission better for MPG”
+      * "Quantify the MPG difference between automatic and manual transmissions"
 
 
 ## Exploratory Analysis
@@ -22,15 +23,47 @@ Motor Trend provides information, opinions, and tips about cars to its readers. 
 ```{r cars}
 data(cars)
 summary(mtcars)
+mtcarsdf <- as.data.frame(mtcars)
 ```
 
 ## Including Plots
 
 You can also embed plots, for example:
 
-```{r pressure, echo=TRUE}
-cargrp <- aggregate(mtcars, by = list("am"), FUN = mean, na.rm = TRUE)
+```{r plots, echo=TRUE}
+cargrp <- aggregate(mtcars$am, list(mtcars$mpg), function(x) unique(x))
+colnames(cargrp) <- c("mpg", "am")
+cargrp[17,2]
 
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+## Linear Regression 
+
+```{r linearmodel, echo=TRUE}
+lmCars <- lm(mtcars$am~ mtcars$mpg)
+summary(lmCars)$coeff
+```
+
+
+##GLM
+
+The model supports that the MPG increases for vehicles that are automatic.
+
+
+```{r glm, echo=TRUE}
+logCars <- glm(mtcars$am~ mtcars$mpg, family = "binomial")
+summary(logCars)
+```
+
+## Probability Plot Automatic Transmission
+
+
+```{r glmplot, echo=TRUE} 
+plot(mtcars$mpg,logCars$fitted,pch=19,col="blue",xlab="MPG",ylab="Probability Automatic")
+
+```
+
+
+## Results
