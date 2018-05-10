@@ -40,10 +40,12 @@ cargrp[17,2]
 
 
 ## Linear Regression 
+The simple linear regression model is not a valid model given a low coefficient of determination and the type of data points.
+The outcome is based on probabilities of binary options.
 
 ```{r linearmodel, echo=TRUE}
 lmCars <- lm(mtcars$am~ mtcars$mpg)
-summary(lmCars)$coeff
+summary(lmCars)
 ```
 
 
@@ -55,6 +57,7 @@ The model supports that the MPG increases for vehicles that are automatic.
 ```{r glm, echo=TRUE}
 logCars <- glm(mtcars$am~ mtcars$mpg, family = "binomial")
 summary(logCars)
+logCars$fitted
 ```
 
 ## Probability Plot Automatic Transmission
@@ -67,3 +70,23 @@ plot(mtcars$mpg,logCars$fitted,pch=19,col="blue",xlab="MPG",ylab="Probability Au
 
 
 ## Results
+```{r sample, echo = TRUE}
+poverty <- read.csv(paste0(getwd(),"/","poverty.csv"))
+plm <- lm(poverty$PovPct~poverty$Brth15to17)
+summary(plm)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
