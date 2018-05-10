@@ -33,7 +33,7 @@ You can also embed plots, for example:
 ```{r plots, echo=TRUE}
 cargrp <- aggregate(mtcars$am, list(mtcars$mpg), function(x) unique(x))
 colnames(cargrp) <- c("mpg", "am")
-cargrp[17,2]
+cargrp
 
 ```
 
@@ -51,13 +51,27 @@ summary(lmCars)
 
 ##GLM
 
-The model supports that the MPG increases for vehicles that are automatic.
+The model supports that the MPG increases for vehicles that are automatic or not automatic. We use binomial general linear model
+given that 1 of 2 outcomes is possible for mileage per gallon.
+
+The model is given by: probautomatic = .307MPG - 6.6035. So for every increase in distance of .307MPG theres a higher probabilty that the vehicle
+is automatic.
 
 
 ```{r glm, echo=TRUE}
 logCars <- glm(mtcars$am~ mtcars$mpg, family = "binomial")
 summary(logCars)
 logCars$fitted
+```
+
+```{r CI, echo=TRUE}
+exp(logCars$coefficients)
+exp(confint(logCars))
+```
+
+
+```{r carsanova, echo=TRUE}
+anova(logCars, test = "Chisq")
 ```
 
 ## Probability Plot Automatic Transmission
@@ -67,6 +81,15 @@ logCars$fitted
 plot(mtcars$mpg,logCars$fitted,pch=19,col="blue",xlab="MPG",ylab="Probability Automatic")
 
 ```
+
+```{r sample 2, echo=TRUE}
+library(manipulate)
+x<-seq(-10,10,length=1000) 
+manipulate(
+plot(x,exp(beta0+beta1*x)/(1+exp(beta0+beta1*x)), type="l",lwd=3,frame=FALSE),
+beta1=slider(-2,2,step=.1,initial=2), beta0=slider(-2,2,step=.1,initial=0) )
+```
+
 
 
 ## Results
