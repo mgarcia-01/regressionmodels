@@ -24,6 +24,7 @@ Motor Trend provides information, opinions, and tips about cars to its readers. 
 data(cars)
 summary(mtcars)
 mtcarsdf <- as.data.frame(mtcars)
+
 ```
 
 ## Including Plots
@@ -31,6 +32,7 @@ mtcarsdf <- as.data.frame(mtcars)
 You can also embed plots, for example:
 
 ```{r plots, echo=TRUE}
+cargrp <- as.data.frame(cargrp)
 cargrp <- aggregate(mtcars$am, list(mtcars$mpg), function(x) unique(x))
 colnames(cargrp) <- c("mpg", "am")
 cargrp
@@ -97,19 +99,6 @@ beta1=slider(-2,2,step=.1,initial=2), beta0=slider(-2,2,step=.1,initial=0) )
 poverty <- read.csv(paste0(getwd(),"/","poverty.csv"))
 plm <- lm(poverty$PovPct~poverty$Brth15to17)
 summary(plm)
-
 ```
-
-
-
-
-
-
-
-
-
-
-
-
 
 
