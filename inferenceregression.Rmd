@@ -1,0 +1,53 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r sample, echo= TRUE}
+library(UsingR);data(diamond)
+y<-diamond$price
+x<-diamond$carat
+n<-length(y) 
+beta1<-cor(y,x)*sd(y)/sd(x)
+beta0<-mean(y)-beta1*mean(x)
+e<-y-beta0-beta1*x
+sigma<-sqrt(sum(e^2)/(n-2))
+ssx<-sum((x-mean(x))^2)
+seBeta0<-(1/n+mean(x)^2/ssx)^.5*sigma
+seBeta1<-sigma/sqrt(ssx)
+tBeta0<-beta0/seBeta0
+tBeta1<-beta1/seBeta1 
+pBeta0<-2*pt(abs(tBeta0),df=n-2,lower.tail=FALSE) 
+pBeta1<-2*pt(abs(tBeta1),df=n-2,lower.tail=FALSE) 
+coefTable<-rbind(c(beta0,seBeta0,tBeta0,pBeta0),c(beta1,seBeta1,tBeta1,pBeta1)) 
+colnames(coefTable)<-c("Estimate","Std.Error","tvalue","P(>|t|)") 
+rownames(coefTable)<-c("(Intercept)","x")
+
+coefTable
+```
+
+
+
+```{r fitsample,echo=TRUE}
+fit <- lm(y ~ x);
+summary(fit)$coefficients
+```
+
+
+```{r sample2, echo=TRUE}
+plot(x, y, frame=FALSE,xlab="Carat",ylab="Dollars",pch=21,col="black", bg="lightblue", cex=2)
+abline(fit, lwd = 2)
+xVals <- seq(min(x), max(x), by = .01)
+yVals <- beta0 + beta1 * xVals
+se1 <- sigma * sqrt(1 / n + (xVals - mean(x))^2/ssx)
+se2 <- sigma * sqrt(1 + 1 / n + (xVals - mean(x))^2/ssx)
+lines(xVals, yVals + 2 * se1)
+lines(xVals, yVals - 2 * se1)
+lines(xVals, yVals + 2 * se2)
+lines(xVals, yVals - 2 * se2)
+```
+

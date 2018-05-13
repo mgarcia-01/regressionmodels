@@ -20,7 +20,8 @@ attempt to answer two questions relating to our question: MPG is better
 ## Exeutive Summary
 
 Motor Trend provides information, opinions, and tips about cars to its readers. A topic of interest is energy efficiency of vehicles, specifically autmatic and manual transimission and miles per gallon. The analysis will provide insight into the methods used and the results for answering the question is miles per gallon for automatic vehicles greater than, less than, or equal to vehicles with manual transmission.
-
+      * “Is an automatic or manual transmission better for MPG”
+      * "Quantify the MPG difference between automatic and manual transmissions"
 
 
 ## Exploratory Analysis
@@ -31,8 +32,13 @@ Motor Trend provides information, opinions, and tips about cars to its readers. 
 ```{r cars}
 data(cars)
 summary(mtcars)
+<<<<<<< HEAD
 names(mtcars)
 hist
+=======
+mtcarsdf <- as.data.frame(mtcars)
+
+>>>>>>> 8b06f7e2b108da0ae2c5ccbdc385c76fb7893bc6
 ```
 
 ## Exploratory Analysis
@@ -48,10 +54,81 @@ hist(mns, col = "dodger blue",breaks = 20, xlab = "simulated results")
 rd <- runif(1000)
 hist(rd,col = "green",breaks = 20, xlab = "uniform results")
 
+<<<<<<< HEAD
 abc <- function(x) dnorm(x, log = FALSE)
 plot(abc, -max(mns), max(mns)
      #,main = "log { Normal density }"
      , xlab = "theoretical distribution")
+=======
+```{r plots, echo=TRUE}
+cargrp <- as.data.frame(cargrp)
+cargrp <- aggregate(mtcars$am, list(mtcars$mpg), function(x) unique(x))
+colnames(cargrp) <- c("mpg", "am")
+cargrp
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+## Linear Regression 
+The simple linear regression model is not a valid model given a low coefficient of determination and the type of data points.
+The outcome is based on probabilities of binary options.
+
+```{r linearmodel, echo=TRUE}
+lmCars <- lm(mtcars$am~ mtcars$mpg)
+summary(lmCars)
+```
+
+
+##GLM
+
+The model supports that the MPG increases for vehicles that are automatic or not automatic. We use binomial general linear model
+given that 1 of 2 outcomes is possible for mileage per gallon.
+
+The model is given by: probautomatic = .307MPG - 6.6035. So for every increase in distance of .307MPG theres a higher probabilty that the vehicle
+is automatic.
+
+
+```{r glm, echo=TRUE}
+logCars <- glm(mtcars$am~ mtcars$mpg, family = "binomial")
+summary(logCars)
+logCars$fitted
+```
+
+```{r CI, echo=TRUE}
+exp(logCars$coefficients)
+exp(confint(logCars))
+```
+
+
+```{r carsanova, echo=TRUE}
+anova(logCars, test = "Chisq")
+```
+
+## Probability Plot Automatic Transmission
+
+
+```{r glmplot, echo=TRUE} 
+plot(mtcars$mpg,logCars$fitted,pch=19,col="blue",xlab="MPG",ylab="Probability Automatic")
+
+```
+
+```{r sample 2, echo=TRUE}
+library(manipulate)
+x<-seq(-10,10,length=1000) 
+manipulate(
+plot(x,exp(beta0+beta1*x)/(1+exp(beta0+beta1*x)), type="l",lwd=3,frame=FALSE),
+beta1=slider(-2,2,step=.1,initial=2), beta0=slider(-2,2,step=.1,initial=0) )
+```
+
+
+
+## Results
+```{r sample, echo = TRUE}
+poverty <- read.csv(paste0(getwd(),"/","poverty.csv"))
+plm <- lm(poverty$PovPct~poverty$Brth15to17)
+summary(plm)
+>>>>>>> 8b06f7e2b108da0ae2c5ccbdc385c76fb7893bc6
+```
+
+
