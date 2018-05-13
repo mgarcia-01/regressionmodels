@@ -9,16 +9,27 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<<<<<<< HEAD
 ## Executive Summary:
 Motor Trend contains a vast amount of data relating to the vehicles specifications. The research will
 attempt to answer two questions relating to our question: MPG is better
 
 “Is an automatic or manual transmission better for MPG”
 "Quantify the MPG difference between automatic and manual transmissions"
+=======
+## Exeutive Summary
+
+Motor Trend provides information, opinions, and tips about cars to its readers. A topic of interest is energy efficiency of vehicles, specifically autmatic and manual transimission and miles per gallon. The analysis will provide insight into the methods used and the results for answering the question is miles per gallon for automatic vehicles greater than, less than, or equal to vehicles with manual transmission.
+
+
+
+## Exploratory Analysis
+>>>>>>> 52c26a0c579a48d1f913f126737358410a67241f
 
 
 
 ```{r cars}
+data(cars)
 summary(mtcars)
 names(mtcars)
 hist
