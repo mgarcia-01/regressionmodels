@@ -27,11 +27,18 @@ mtcarsdf <- as.data.frame(mtcars)
 
 ```
 
+```{r distributions, echo=TRUE}
+
+```
+
+
 ## Including Plots
 
 You can also embed plots, for example:
 
-```{r plots, echo=TRUE}
+```{r plots, include=FALSE, echo=FALSE}
+	
+cargrp <- aggregate(mtcars, by = list(mtcars$am), FUN = mean, na.rm = TRUE)
 cargrp <- as.data.frame(cargrp)
 cargrp <- aggregate(mtcars$am, list(mtcars$mpg), function(x) unique(x))
 colnames(cargrp) <- c("mpg", "am")
@@ -81,7 +88,6 @@ anova(logCars, test = "Chisq")
 
 ```{r glmplot, echo=TRUE} 
 plot(mtcars$mpg,logCars$fitted,pch=19,col="blue",xlab="MPG",ylab="Probability Automatic")
-
 ```
 
 ```{r sample 2, echo=TRUE}
