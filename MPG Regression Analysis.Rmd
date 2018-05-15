@@ -38,6 +38,7 @@ hist(mtcarsdf$mpg,col = "blue", freq = TRUE, xlab = "MPG")
 rug(mtcarsdf$mpg, col = "red")
 abline(v = mean(mtcarsdf$mpg), col = "red", lwd = 4)
 boxplot(mpg ~ am, data = mtcarsdf, col = "green", xlab = "Manual vs Automatic", ylab = "MPG")
+
 ```
 
 
