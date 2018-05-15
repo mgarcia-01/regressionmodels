@@ -27,8 +27,16 @@ mtcarsdf <- as.data.frame(mtcars)
 
 ```
 
-```{r distributions, echo=TRUE}
+The distributions for the mpg for the total dataset are reflected 
 
+```{r distributions, echo=TRUE}
+mtcarsdf$mpg_rnd <- round(mtcarsdf$mpg,0)
+
+par(mfrow = c(1, 2), mar = c(4, 4, 2, 1))
+hist(mtcarsdf$mpg,col = "blue", freq = TRUE)
+rug(mtcarsdf$mpg, col = "red")
+abline(v = mean(mtcarsdf$mpg), col = "red", lwd = 4)
+boxplot(mpg ~ am, data = mtcarsdf, col = "green" )
 ```
 
 
@@ -88,6 +96,7 @@ anova(logCars, test = "Chisq")
 
 ```{r glmplot, echo=TRUE} 
 plot(mtcars$mpg,logCars$fitted,pch=19,col="blue",xlab="MPG",ylab="Probability Automatic")
+rug(mtcars$mpg, lwd = 2, col = "red")
 ```
 
 ```{r sample 2, echo=TRUE}
