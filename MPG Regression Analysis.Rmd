@@ -64,21 +64,37 @@ print(cargrp)
 
 
 
+## Nested Fitting - Generalized Linear Model
+```{r Gnestedfits, echo=TRUE}
+Model1 <- glm(am ~ mpg , data = mtcars, family = "binomial") 
+Model2 <- glm(am ~ mpg + wt, data = mtcars, family = "binomial") 
+Model3 <- glm(am ~ mpg + wt + hp , data = mtcars, family = "binomial") 
+Model4 <- glm(am ~ mpg + wt + hp+ disp, data = mtcars, family = "binomial") 
+#Model5 <- glm(am ~ ., data = mtcars, family = "binomial")
+
+```
+
+## ANOVA GLM
+```{r glinearmodel, echo=TRUE}
+anova(Model1, Model2, Model3, Model4)
+```
+
+
 ## Nested Fitting - Linear Model
-```{r nestedfits, echo=TRUE}
-Model1 <- lm(mpg ~ am , data = mtcars) 
-Model2 <- lm(mpg ~ am + wt, data = mtcars) 
-Model3 <- lm(mpg ~ am + wt + hp , data = mtcars) 
-Model4 <- lm(mpg ~ am + wt + hp+ disp, data = mtcars) 
-Model5 <- lm(mpg ~ ., data = mtcars)
+```{r nestedfitsLM, echo=TRUE}
+LModel1 <- lm(mpg ~ am , data = mtcars) 
+LModel2 <- lm(mpg ~ am + wt, data = mtcars) 
+LModel3 <- lm(mpg ~ am + wt + hp , data = mtcars) 
+LModel4 <- lm(mpg ~ am + wt + hp+ disp, data = mtcars) 
+LModel5 <- lm(mpg ~ ., data = mtcars)
 ```
 
+## ANOVA LM
 
-## ANOVA
+
 ```{r linearmodel, echo=TRUE}
-anova(Model1, Model2, Model3, Model4, Model5)
+anova(LModel1, LModel2, LModel3, LModel4, LModel5)
 ```
-
 
 ##GLM
 
@@ -91,6 +107,7 @@ is automatic.
 
 ```{r glm, echo=TRUE}
 logCars <- glm(mtcars$am~ mtcars$mpg, family = "binomial")
+
 summary(logCars)
 logCars$fitted
 ```
