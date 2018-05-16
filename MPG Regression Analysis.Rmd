@@ -2,7 +2,9 @@
 title: "MPG Regression Analysis"
 author: "Michael Garcia"
 date: "4/13/2018"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -104,7 +106,6 @@ is automatic.
 
 ```{r glm, echo=TRUE}
 logCars <- glm(mtcars$am~ mtcars$mpg, family = "binomial")
-
 summary(logCars)
 logCars$fitted
 ```
@@ -123,8 +124,18 @@ summary(Model4)
 
 ```
 
+### Evaluating the AIC
 
-```{r CI, echo=TRUE}
+
+```{r pchi, echo=TRUE, include=TRUE}
+1-pchisq(Model1$aic,Model1$df.residual)
+1-pchisq(Model2$aic,Model2$df.residual)
+1-pchisq(Model3$aic,Model3$df.residual)
+1-pchisq(Model4$aic,Model4$df.residual)
+
+```
+
+```{r confidenceinterval, echo=TRUE, include=TRUE}
 exp(logCars$coefficients)
 exp(confint(logCars))
 ```
@@ -145,7 +156,6 @@ rug(mtcars$mpg, lwd = 2, col = "red")
 ```{r residuals, echo=TRUE}
 par(mfrow = c(2,2))
 plot(logCars)
-
 ```
 
 
