@@ -16,7 +16,7 @@ Motor Trend provides information, opinions, and tips about cars to its readers. 
       * "Quantify the MPG difference between automatic and manual transmissions"
 
 
-## Exploratory Analysis
+#### Exploratory Analysis
 
 
 
@@ -27,7 +27,7 @@ mtcarsdf <- as.data.frame(mtcars)
 
 ```
 
-### Exploratory Data Analysis- Distribution
+#### Exploratory Data Analysis- Distribution
 The distributions for the mpg for the total dataset are reflected 
 
 ```{r distributions, echo=TRUE}
@@ -41,14 +41,12 @@ boxplot(mpg ~ am, data = mtcarsdf, col = "green", xlab = "Manual vs Automatic", 
 
 ```
 
-### Scatterplit Matrix
+#### Scatterplot Matrix
 The plot displays the points for pairs of variables.
 
 ```{r pairs, echo=TRUE}
 pairs(mpg ~ ., data = mtcars, col = "black")
 ```
-
-## Including Plots
 
 You can also embed plots, for example:
 
@@ -64,7 +62,7 @@ print(cargrp)
 
 
 
-## Nested Fitting - Generalized Linear Model
+#### Nested Fitting - Generalized Linear Model
 ```{r Gnestedfits, echo=TRUE}
 Model1 <- glm(am ~ mpg , data = mtcars, family = "binomial") 
 Model2 <- glm(am ~ mpg + wt, data = mtcars, family = "binomial") 
@@ -74,13 +72,13 @@ Model4 <- glm(am ~ mpg + wt + hp+ disp, data = mtcars, family = "binomial")
 
 ```
 
-## ANOVA GLM
+#### ANOVA GLM
 ```{r glinearmodel, echo=TRUE}
 anova(Model1, Model2, Model3, Model4)
 ```
 
 
-## Nested Fitting - Linear Model
+#### Nested Fitting - Linear Model
 ```{r nestedfitsLM, echo=TRUE}
 LModel1 <- lm(mpg ~ am , data = mtcars) 
 LModel2 <- lm(mpg ~ am + wt, data = mtcars) 
@@ -89,14 +87,14 @@ LModel4 <- lm(mpg ~ am + wt + hp+ disp, data = mtcars)
 LModel5 <- lm(mpg ~ ., data = mtcars)
 ```
 
-## ANOVA LM
+#### ANOVA LM
 
 
 ```{r linearmodel, echo=TRUE}
 anova(LModel1, LModel2, LModel3, LModel4, LModel5)
 ```
 
-##GLM
+#### GLM
 
 The model supports that the MPG increases for vehicles that are automatic or not automatic. We use binomial general linear model
 given that 1 of 2 outcomes is possible for mileage per gallon.
@@ -136,7 +134,7 @@ exp(confint(logCars))
 anova(logCars, test = "Chisq")
 ```
 
-## Probability Plot Automatic Transmission
+### Probability Plot Automatic Transmission
 
 
 ```{r glmplot, echo=TRUE} 
@@ -152,21 +150,5 @@ plot(logCars)
 
 
 
-```{r sample 2, echo=TRUE}
-library(manipulate)
-x<-seq(-10,10,length=1000) 
-manipulate(
-plot(x,exp(beta0+beta1*x)/(1+exp(beta0+beta1*x)), type="l",lwd=3,frame=FALSE),
-beta1=slider(-2,2,step=.1,initial=2), beta0=slider(-2,2,step=.1,initial=0) )
-```
-
-
-
-## Results
-```{r sample, echo = TRUE}
-poverty <- read.csv(paste0(getwd(),"/","poverty.csv"))
-plm <- lm(poverty$PovPct~poverty$Brth15to17)
-summary(plm)
-```
 
 
