@@ -3,19 +3,22 @@ title: "MPG Regression Analysis"
 author: "Michael Garcia"
 date: "4/13/2018"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Exeutive Summary
+## Executive Summary
 
 Motor Trend provides information, opinions, and tips about cars to its readers. A topic of interest is energy efficiency of vehicles, specifically autmatic and manual transimission and miles per gallon. The analysis will provide insight into the methods used and the results for answering the question is miles per gallon for automatic vehicles greater than, less than, or equal to vehicles with manual transmission.
       * “Is an automatic or manual transmission better for MPG”
       * "Quantify the MPG difference between automatic and manual transmissions"
+
+
+The question involves a response of binary data: is it MPG automatic or manual. The models tested involve linear models and generalized linear model with binomial family function. The coefficient of determination is highest for LModel5. However, the predictors have p-values indiciating they are not significant to the model.
 
 
 #### Exploratory Analysis
@@ -43,12 +46,7 @@ boxplot(mpg ~ am, data = mtcarsdf, col = "green", xlab = "Manual vs Automatic", 
 
 ```
 
-#### Scatterplot Matrix
-The plot displays the points for pairs of variables.
 
-```{r pairs, echo=TRUE}
-pairs(mpg ~ ., data = mtcars, col = "black")
-```
 
 You can also embed plots, for example:
 
@@ -94,6 +92,16 @@ LModel5 <- lm(mpg ~ ., data = mtcars)
 
 ```{r linearmodel, echo=TRUE}
 anova(LModel1, LModel2, LModel3, LModel4, LModel5)
+LModelSum1 <- summary(LModel1)
+LModelSum2 <- summary(LModel2)
+LModelSum3 <- summary(LModel3)
+LModelSum4 <- summary(LModel4)
+LModelSum5 <- summary(LModel5)
+LModelSum1$r.squared
+LModelSum2$r.squared
+LModelSum3$r.squared
+LModelSum4$r.squared
+LModelSum5$r.squared
 ```
 
 #### GLM
@@ -110,7 +118,7 @@ summary(logCars)
 logCars$fitted
 ```
 
-### GLM Summary
+#### GLM Summary
 The models for the GLM are summarized here. The Akaike Information Criterion (aic) is proper for the model
 as we are looking at the likelihood of the vehicle being either automatic or manual. The aic
  measures the dispersion of data points for models of likelihood. The AM = .307 - 6.60 has the largest AIC
@@ -124,7 +132,7 @@ summary(Model4)
 
 ```
 
-### Evaluating the AIC
+#### Evaluating the AIC
 
 
 ```{r pchi, echo=TRUE, include=TRUE}
@@ -145,7 +153,9 @@ exp(confint(logCars))
 anova(logCars, test = "Chisq")
 ```
 
-### Probability Plot Automatic Transmission
+## Appendix
+
+#### Probability Plot Automatic Transmission
 
 
 ```{r glmplot, echo=TRUE} 
@@ -153,12 +163,19 @@ plot(mtcars$mpg,logCars$fitted,pch=19,col="blue",xlab="MPG",ylab="Probability Au
 rug(mtcars$mpg, lwd = 2, col = "red")
 ```
 
+
+#### Residuals and Fit Plots
 ```{r residuals, echo=TRUE}
 par(mfrow = c(2,2))
 plot(logCars)
 ```
 
+#### Scatterplot Matrix
+The plot displays the points for pairs of variables.
 
+```{r pairs, echo=TRUE}
+pairs(mpg ~ ., data = mtcars, col = "black")
+```
 
 
 

@@ -1,2 +1,2 @@
 # memory
-options( java.parameters="-Xmx4096" )
+options( java.parameters="-Xmx1024" )
