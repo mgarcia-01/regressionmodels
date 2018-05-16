@@ -132,6 +132,15 @@ summary(Model4)
 
 ```
 
+#### GLM Step and Best Model Selection
+```{r step, echo=TRUE}
+base_model <- glm(am ~ ., data = mtcars)
+optimal_model <- step(init_model, direction = "both")
+summary(optimal_model)
+```
+
+
+
 #### Evaluating the AIC
 
 
@@ -176,6 +185,8 @@ The plot displays the points for pairs of variables.
 ```{r pairs, echo=TRUE}
 pairs(mpg ~ ., data = mtcars, col = "black")
 ```
+
+
 
 
 
