@@ -104,13 +104,27 @@ given that 1 of 2 outcomes is possible for mileage per gallon.
 The model is given by: probautomatic = .307MPG - 6.6035. So for every increase in distance of .307MPG theres a higher probabilty that the vehicle
 is automatic.
 
-
 ```{r glm, echo=TRUE}
 logCars <- glm(mtcars$am~ mtcars$mpg, family = "binomial")
 
 summary(logCars)
 logCars$fitted
 ```
+
+### GLM Summary
+The models for the GLM are summarized here. The Akaike Information Criterion (aic) is proper for the model
+as we are looking at the likelihood of the vehicle being either automatic or manual. The aic
+ measures the dispersion of data points for models of likelihood. The AM = .307 - 6.60 has the largest AIC
+ compared to the rest of the models
+
+```{r GLM_Summary, echo=TRUE, include=TRUE}
+summary(Model1)
+summary(Model2)
+summary(Model3)
+summary(Model4)
+
+```
+
 
 ```{r CI, echo=TRUE}
 exp(logCars$coefficients)
