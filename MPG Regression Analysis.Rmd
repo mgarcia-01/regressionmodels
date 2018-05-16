@@ -41,6 +41,12 @@ boxplot(mpg ~ am, data = mtcarsdf, col = "green", xlab = "Manual vs Automatic", 
 
 ```
 
+### Scatterplit Matrix
+The plot displays the points for pairs of variables.
+
+```{r pairs, echo=TRUE}
+pairs(mpg ~ ., data = mtcars, col = "black")
+```
 
 ## Including Plots
 
@@ -52,19 +58,25 @@ cargrp <- aggregate(mtcars, by = list(mtcars$am), FUN = mean, na.rm = TRUE)
 cargrp <- as.data.frame(cargrp)
 cargrp <- aggregate(mtcars$am, list(mtcars$mpg), function(x) unique(x))
 colnames(cargrp) <- c("mpg", "am")
-cargrp
+print(cargrp)
 
 ```
 
 
 
-## Linear Regression 
-The simple linear regression model is not a valid model given a low coefficient of determination and the type of data points.
-The outcome is based on probabilities of binary options.
+## Nested Fitting - Linear Model
+```{r nestedfits, echo=TRUE}
+Model1 <- lm(mpg ~ am , data = mtcars) 
+Model2 <- lm(mpg ~ am + wt, data = mtcars) 
+Model3 <- lm(mpg ~ am + wt + hp , data = mtcars) 
+Model4 <- lm(mpg ~ am + wt + hp+ disp, data = mtcars) 
+Model5 <- lm(mpg ~ ., data = mtcars)
+```
 
+
+## ANOVA
 ```{r linearmodel, echo=TRUE}
-lmCars <- lm(mtcars$am~ mtcars$mpg)
-summary(lmCars)
+anova(Model1, Model2, Model3, Model4, Model5)
 ```
 
 
@@ -100,6 +112,14 @@ anova(logCars, test = "Chisq")
 plot(mtcars$mpg,logCars$fitted,pch=19,col="blue",xlab="MPG",ylab="Probability Automatic")
 rug(mtcars$mpg, lwd = 2, col = "red")
 ```
+
+```{r residuals, echo=TRUE}
+par(mfrow = c(2,2))
+plot(logCars)
+
+```
+
+
 
 ```{r sample 2, echo=TRUE}
 library(manipulate)
