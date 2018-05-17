@@ -120,7 +120,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">MPG Regression Analysis</h1>
 <h4 class="author"><em>Michael Garcia</em></h4>
-<h4 class="date"><em>4/13/2018</em></h4>
+<h4 class="date"><em>5/16/2018</em></h4>
 
 </div>
 
@@ -128,6 +128,7 @@ $(document).ready(function () {
 <div id="executive-summary" class="section level2">
 <h2>Executive Summary</h2>
 <p>Motor Trend provides information, opinions, and tips about cars to its readers. A topic of interest is energy efficiency of vehicles, specifically autmatic and manual transimission and miles per gallon. The analysis will provide insight into the methods used and the results for answering the question is miles per gallon for automatic vehicles greater than, less than, or equal to vehicles with manual transmission. * “Is an automatic or manual transmission better for MPG” * “Quantify the MPG difference between automatic and manual transmissions”</p>
+<p>The question involves a response of binary data: is it MPG automatic or manual. The models tested involve linear models and generalized linear model with binomial family function. The coefficient of determination is highest for LModel5. However, the predictors have p-values indiciating they are not significant to the model.</p>
 <div id="exploratory-analysis" class="section level4">
 <h4>Exploratory Analysis</h4>
 <pre class="r"><code>data(cars)
@@ -217,6 +218,21 @@ LModel5 &lt;- lm(mpg ~ ., data = mtcars)</code></pre>
 ## 5     21 147.49  6     32.41  0.7692  0.602559    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<pre class="r"><code>LModelSum1 &lt;- summary(LModel1)
+LModelSum2 &lt;- summary(LModel2)
+LModelSum3 &lt;- summary(LModel3)
+LModelSum4 &lt;- summary(LModel4)
+LModelSum5 &lt;- summary(LModel5)
+LModelSum1$r.squared</code></pre>
+<pre><code>## [1] 0.3597989</code></pre>
+<pre class="r"><code>LModelSum2$r.squared</code></pre>
+<pre><code>## [1] 0.7528348</code></pre>
+<pre class="r"><code>LModelSum3$r.squared</code></pre>
+<pre><code>## [1] 0.8398903</code></pre>
+<pre class="r"><code>LModelSum4$r.squared</code></pre>
+<pre><code>## [1] 0.8402309</code></pre>
+<pre class="r"><code>LModelSum5$r.squared</code></pre>
+<pre><code>## [1] 0.8690158</code></pre>
 </div>
 <div id="glm" class="section level4">
 <h4>GLM</h4>
@@ -361,9 +377,150 @@ summary(logCars)</code></pre>
 ## 
 ## Number of Fisher Scoring iterations: 9</code></pre>
 </div>
+<div id="glm-step-and-best-model-selection" class="section level4">
+<h4>GLM Step and Best Model Selection</h4>
+<pre class="r"><code>base_model &lt;- glm(am ~ ., data = mtcars)
+optimal_model &lt;- step(base_model, direction = &quot;both&quot;)</code></pre>
+<pre><code>## Start:  AIC=17.93
+## am ~ mpg + cyl + disp + hp + drat + wt + qsec + vs + gear + carb
+## 
+##        Df Deviance    AIC
+## - wt    1   1.5502 15.936
+## - carb  1   1.5530 15.995
+## - disp  1   1.5567 16.071
+## - hp    1   1.5651 16.243
+## - drat  1   1.5736 16.416
+## - vs    1   1.6219 17.384
+## - cyl   1   1.6494 17.922
+## &lt;none&gt;      1.5497 17.926
+## - mpg   1   1.6605 18.136
+## - gear  1   1.6785 18.482
+## - qsec  1   1.7247 19.350
+## 
+## Step:  AIC=15.94
+## am ~ mpg + cyl + disp + hp + drat + qsec + vs + gear + carb
+## 
+##        Df Deviance    AIC
+## - carb  1   1.5533 14.001
+## - disp  1   1.5609 14.156
+## - hp    1   1.5653 14.248
+## - drat  1   1.5736 14.417
+## - vs    1   1.6236 15.417
+## &lt;none&gt;      1.5502 15.936
+## - cyl   1   1.6531 15.993
+## - mpg   1   1.6754 16.422
+## - gear  1   1.6791 16.493
+## + wt    1   1.5497 17.926
+## - qsec  1   1.7941 18.613
+## 
+## Step:  AIC=14
+## am ~ mpg + cyl + disp + hp + drat + qsec + vs + gear
+## 
+##        Df Deviance    AIC
+## - disp  1   1.5613 12.164
+## - hp    1   1.5654 12.248
+## - drat  1   1.5745 12.434
+## - vs    1   1.6238 13.420
+## &lt;none&gt;      1.5533 14.001
+## - cyl   1   1.6698 14.316
+## - gear  1   1.6933 14.762
+## - mpg   1   1.7304 15.456
+## + carb  1   1.5502 15.936
+## + wt    1   1.5530 15.995
+## - qsec  1   1.8134 16.954
+## 
+## Step:  AIC=12.16
+## am ~ mpg + cyl + hp + drat + qsec + vs + gear
+## 
+##        Df Deviance    AIC
+## - hp    1   1.5677 10.296
+## - drat  1   1.5842 10.630
+## - vs    1   1.6255 11.454
+## &lt;none&gt;      1.5613 12.164
+## - cyl   1   1.7031 12.947
+## - gear  1   1.7371 13.580
+## - mpg   1   1.7512 13.839
+## + disp  1   1.5533 14.001
+## + wt    1   1.5567 14.071
+## + carb  1   1.5609 14.156
+## - qsec  1   1.8506 15.605
+## 
+## Step:  AIC=10.3
+## am ~ mpg + cyl + drat + qsec + vs + gear
+## 
+##        Df Deviance     AIC
+## - drat  1   1.5916  8.7807
+## - vs    1   1.6264  9.4724
+## &lt;none&gt;      1.5677 10.2955
+## - cyl   1   1.7185 11.2350
+## - mpg   1   1.7643 12.0771
+## + hp    1   1.5613 12.1642
+## + disp  1   1.5654 12.2479
+## + wt    1   1.5659 12.2584
+## + carb  1   1.5676 12.2950
+## - gear  1   1.8101 12.8961
+## - qsec  1   1.8965 14.3893
+## 
+## Step:  AIC=8.78
+## am ~ mpg + cyl + qsec + vs + gear
+## 
+##        Df Deviance     AIC
+## - vs    1   1.6505  7.9429
+## &lt;none&gt;      1.5916  8.7807
+## + drat  1   1.5677 10.2955
+## + hp    1   1.5842 10.6305
+## + disp  1   1.5887 10.7212
+## + wt    1   1.5897 10.7418
+## + carb  1   1.5904 10.7570
+## - cyl   1   1.8074 10.8484
+## - mpg   1   1.8148 10.9804
+## - gear  1   1.9097 12.6110
+## - qsec  1   1.9780 13.7359
+## 
+## Step:  AIC=7.94
+## am ~ mpg + cyl + qsec + gear
+## 
+##        Df Deviance     AIC
+## &lt;none&gt;      1.6505  7.9429
+## + vs    1   1.5916  8.7807
+## - cyl   1   1.8138  8.9619
+## + drat  1   1.6264  9.4724
+## - mpg   1   1.8666  9.8803
+## + carb  1   1.6489  9.9113
+## + hp    1   1.6492  9.9170
+## + disp  1   1.6494  9.9219
+## + wt    1   1.6505  9.9429
+## - gear  1   1.9579 11.4076
+## - qsec  1   2.3181 16.8127</code></pre>
+<pre class="r"><code>summary(optimal_model)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = am ~ mpg + cyl + qsec + gear, data = mtcars)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -0.51557  -0.15860  -0.00793   0.19350   0.35820  
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)  2.36836    1.52965   1.548  0.13319   
+## mpg          0.02703    0.01438   1.880  0.07091 . 
+## cyl         -0.11052    0.06762  -1.634  0.11378   
+## qsec        -0.14810    0.04481  -3.305  0.00269 **
+## gear         0.22288    0.09940   2.242  0.03335 * 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for gaussian family taken to be 0.06112933)
+## 
+##     Null deviance: 7.7188  on 31  degrees of freedom
+## Residual deviance: 1.6505  on 27  degrees of freedom
+## AIC: 7.9429
+## 
+## Number of Fisher Scoring iterations: 2</code></pre>
+</div>
 <div id="evaluating-the-aic" class="section level4">
 <h4>Evaluating the AIC</h4>
-<p>Looking</p>
 <pre class="r"><code>1-pchisq(Model1$aic,Model1$df.residual)</code></pre>
 <pre><code>## [1] 0.2940046</code></pre>
 <pre class="r"><code>1-pchisq(Model2$aic,Model2$df.residual)</code></pre>

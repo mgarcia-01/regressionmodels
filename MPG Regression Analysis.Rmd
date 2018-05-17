@@ -1,7 +1,7 @@
 ---
 title: "MPG Regression Analysis"
 author: "Michael Garcia"
-date: "4/13/2018"
+date: "5/16/2018"
 output:
   html_document: default
   pdf_document: default
@@ -135,7 +135,7 @@ summary(Model4)
 #### GLM Step and Best Model Selection
 ```{r step, echo=TRUE}
 base_model <- glm(am ~ ., data = mtcars)
-optimal_model <- step(init_model, direction = "both")
+optimal_model <- step(base_model, direction = "both")
 summary(optimal_model)
 ```
 
