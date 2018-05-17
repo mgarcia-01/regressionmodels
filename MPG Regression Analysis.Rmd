@@ -1,8 +1,15 @@
 ---
 title: "MPG Regression Analysis"
 author: "Michael Garcia"
+<<<<<<< HEAD
 date: "2/18/2018"
 output: html_document
+=======
+date: "5/16/2018"
+output:
+  html_document: default
+  pdf_document: default
+>>>>>>> e7a339dc8b19e65578104b2eba0c9e737192c06f
 ---
 
 ```{r setup, include=FALSE}
@@ -95,7 +102,45 @@ summary(logCars)
 logCars$fitted
 ```
 
+<<<<<<< HEAD
 ```{r CI, echo=TRUE}
+=======
+#### GLM Summary
+The models for the GLM are summarized here. The Akaike Information Criterion (aic) is proper for the model
+as we are looking at the likelihood of the vehicle being either automatic or manual. The aic
+ measures the dispersion of data points for models of likelihood. The AM = .307 - 6.60 has the largest AIC
+ compared to the rest of the models
+
+```{r GLM_Summary, echo=TRUE, include=TRUE}
+summary(Model1)
+summary(Model2)
+summary(Model3)
+summary(Model4)
+
+```
+
+#### GLM Step and Best Model Selection
+```{r step, echo=TRUE}
+base_model <- glm(am ~ ., data = mtcars)
+optimal_model <- step(base_model, direction = "both")
+summary(optimal_model)
+```
+
+
+
+#### Evaluating the AIC
+
+
+```{r pchi, echo=TRUE, include=TRUE}
+1-pchisq(Model1$aic,Model1$df.residual)
+1-pchisq(Model2$aic,Model2$df.residual)
+1-pchisq(Model3$aic,Model3$df.residual)
+1-pchisq(Model4$aic,Model4$df.residual)
+
+```
+
+```{r confidenceinterval, echo=TRUE, include=TRUE}
+>>>>>>> e7a339dc8b19e65578104b2eba0c9e737192c06f
 exp(logCars$coefficients)
 exp(confint(logCars))
 ```
