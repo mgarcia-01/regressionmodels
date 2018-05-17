@@ -17,8 +17,9 @@ Motor Trend provides information, opinions, and tips about cars to its readers. 
       * “Is an automatic or manual transmission better for MPG”
       * "Quantify the MPG difference between automatic and manual transmissions"
 
+The analysis includes to sets of stepped models. Those with "Model#" are Generalized Linear Model using binomial distribution and logiscit regression; "LModel#" are the models using Linear Models.
 
-The question involves a response of binary data: is it MPG automatic or manual. The models tested involve linear models and generalized linear model with binomial family function. The coefficient of determination is highest for LModel5. However, the predictors have p-values indiciating they are not significant to the model.
+The question involves a response of binary data: is it MPG automatic or manual. The models tested involve linear models and generalized linear model with binomial family function. The coefficient of determination is highest for LModel5. However, the predictors have p-values indiciating they are not significant to the model. The question is whether there probability of a vehicle being automatic with higher miles per gallon.
 
 
 #### Exploratory Analysis
